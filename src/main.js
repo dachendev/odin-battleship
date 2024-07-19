@@ -1,7 +1,7 @@
-import Ship from "./lib/Ship";
-import Gameboard from "./lib/Gameboard";
-import Player from "./lib/Player";
-import * as domUtils from "./dom-utils";
+import Player from "./lib/Player.js";
+import Ship from "./lib/Ship.js";
+import "./main.css";
+import * as domUtils from "./utils/dom.utils.js";
 
 // create players
 const player1 = new Player();
@@ -27,4 +27,8 @@ function setupGame() {
   domUtils.renderGameboard(player2.gameboard);
 }
 
-setupGame();
+function domLoaded() {
+  setupGame();
+}
+
+document.addEventListener("DOMContentLoaded", domLoaded);

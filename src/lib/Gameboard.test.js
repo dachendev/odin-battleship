@@ -1,5 +1,5 @@
-import Gameboard from "./Gameboard";
-import Ship from "./Ship";
+import Gameboard from "./Gameboard.js";
+import Ship from "./Ship.js";
 
 describe("Gameboard", () => {
   let gameboard = new Gameboard();
