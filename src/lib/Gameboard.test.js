@@ -13,6 +13,10 @@ describe("Gameboard", () => {
     expect(gameboard).toHaveProperty("misses");
   });
 
+  /**
+   * integration tests
+   */
+
   test("should place ships", () => {
     const ship = new Ship(3);
     gameboard.placeShip(ship, 0, 0);
