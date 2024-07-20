@@ -4,21 +4,21 @@ function isDefined(x) {
 
 export default class Gameboard {
   constructor(options = { width: 10, height: 10 }) {
-    this._width = options.width;
-    this._height = options.height;
+    this.width = options.width;
+    this.height = options.height;
     this.reset();
   }
 
   _hash(x, y) {
-    return y * this._width + x;
+    return y * this.width + x;
   }
 
   _onBoard(x, y) {
-    return x >= 0 && x < this._width && y >= 0 && y < this._height;
+    return x >= 0 && x < this.width && y >= 0 && y < this.height;
   }
 
   reset() {
-    this._grid = new Array(this._width * this._height);
+    this._grid = new Array(this.width * this.height);
     this._ships = new Array(16);
     this._nextShip = 0;
     this.hits = new Set();
