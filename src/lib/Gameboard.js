@@ -25,32 +25,23 @@ export default class Gameboard {
     this.misses = new Set();
   }
 
-  getShip(x, y) {
-    const shipIndex = this._grid[this._hash(x, y)];
-    if (isDefined(shipIndex)) {
-      return this._ships[shipIndex];
+  canPlaceShip(ship, x, y, horizontal) {
+    if (
+      this._nextShip >= this._ships.length ||
+      !this._onBoard(x, y) ||
+      (horizontal && !this._onBoard(x + ship.length - 1, y)) ||
+      (!horizontal && !this._onBoard(x, y + ship.length - 1)) ||
+      !!this.getShip(x, y)
+    ) {
+      return false;
     }
-    return null;
+
+    return true;
   }
 
   placeShip(ship, x, y, horizontal = true) {
-    if (this._nextShip >= this._ships.length) {
-      throw new Error("Too many ships");
-    }
-
-    if (!this._onBoard(x, y)) {
-      throw new Error("Coordinates are out of bounds");
-    }
-
-    if (
-      (horizontal && !this._onBoard(x + ship.length - 1, y)) ||
-      (!horizontal && !this._onBoard(x, y + ship.length - 1))
-    ) {
-      throw new Error("Ship is out of bounds");
-    }
-
-    if (!!this.getShip(x, y)) {
-      throw new Error("Coordinates are already occupied");
+    if (!this.canPlaceShip(ship, x, y, horizontal)) {
+      throw new Error("Cannot place ship");
     }
 
     // add ship to gameboard
@@ -64,6 +55,14 @@ export default class Gameboard {
         this._grid[this._hash(x, y + i)] = shipIndex;
       }
     }
+  }
+
+  getShip(x, y) {
+    const shipIndex = this._grid[this._hash(x, y)];
+    if (isDefined(shipIndex)) {
+      return this._ships[shipIndex];
+    }
+    return null;
   }
 
   receiveAttack(x, y) {
