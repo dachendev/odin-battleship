@@ -2,14 +2,13 @@ import Gameboard from "./Gameboard.js";
 import Ship from "./Ship.js";
 
 describe("Gameboard", () => {
-  let gameboard = new Gameboard();
+  let gameboard;
 
   beforeEach(() => {
     gameboard = new Gameboard();
   });
 
   test("should create a gameboard", () => {
-    expect(gameboard).toHaveProperty("grid");
     expect(gameboard).toHaveProperty("misses");
   });
 
@@ -21,7 +20,7 @@ describe("Gameboard", () => {
     const ship = new Ship(3);
     gameboard.placeShip(ship, 0, 0);
     for (let i = 0; i < ship.length; i++) {
-      expect(gameboard.grid[0][i]).toEqual(ship);
+      expect(gameboard.getShip(i, 0)).toEqual(ship);
     }
   });
 
@@ -29,7 +28,7 @@ describe("Gameboard", () => {
     const ship = new Ship(3);
     gameboard.placeShip(ship, 0, 0, true);
     for (let i = 0; i < ship.length; i++) {
-      expect(gameboard.grid[0][i]).toEqual(ship);
+      expect(gameboard.getShip(i, 0)).toEqual(ship);
     }
   });
 
@@ -37,7 +36,7 @@ describe("Gameboard", () => {
     const ship = new Ship(3);
     gameboard.placeShip(ship, 0, 0, false);
     for (let i = 0; i < ship.length; i++) {
-      expect(gameboard.grid[i][0]).toEqual(ship);
+      expect(gameboard.getShip(0, i)).toEqual(ship);
     }
   });
 
