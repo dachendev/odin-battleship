@@ -34,16 +34,23 @@ export default class Gameboard {
   }
 
   placeShip(ship, x, y, horizontal = true) {
+    if (this._nextShip >= this._ships.length) {
+      throw new Error("Too many ships");
+    }
+
+    if (!this._onBoard(x, y)) {
+      throw new Error("Coordinates are out of bounds");
+    }
+
     if (
-      !this._onBoard(x, y) ||
       (horizontal && !this._onBoard(x + ship.length - 1, y)) ||
       (!horizontal && !this._onBoard(x, y + ship.length - 1))
     ) {
-      throw new Error("Invalid coordinates");
+      throw new Error("Ship is out of bounds");
     }
 
-    if (this._nextShip >= this._ships.length) {
-      throw new Error("Too many ships");
+    if (!!this.getShip(x, y)) {
+      throw new Error("Coordinates are already occupied");
     }
 
     // add ship to gameboard

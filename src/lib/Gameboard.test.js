@@ -42,10 +42,30 @@ describe("Gameboard", () => {
 
   test("should not place ships out of bounds", () => {
     const ship = new Ship(3);
-    expect(() => gameboard.placeShip(ship, 10, 0)).toThrow();
-    expect(() => gameboard.placeShip(ship, 0, 10)).toThrow();
     expect(() => gameboard.placeShip(ship, -1, 0)).toThrow();
+    expect(() => gameboard.placeShip(ship, 10, 0)).toThrow();
     expect(() => gameboard.placeShip(ship, 0, -1)).toThrow();
+    expect(() => gameboard.placeShip(ship, 0, 10)).toThrow();
+  });
+
+  test("should not place ships partially off the board", () => {
+    const ship = new Ship(3);
+    expect(() => gameboard.placeShip(ship, 9, 0, true)).toThrow();
+    expect(() => gameboard.placeShip(ship, 0, 9, false)).toThrow();
+  });
+
+  test("should not place ships on top of other ships", () => {
+    const ship1 = new Ship(3);
+    const ship2 = new Ship(3);
+    gameboard.placeShip(ship1, 0, 0);
+    expect(() => gameboard.placeShip(ship2, 0, 0)).toThrow();
+  });
+
+  test("should keep track of hits", () => {
+    const ship = new Ship(3);
+    gameboard.placeShip(ship, 0, 0);
+    gameboard.receiveAttack(0, 0);
+    expect(gameboard.hits).toContainEqual([0, 0]);
   });
 
   test("should keep track of misses", () => {
