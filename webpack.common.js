@@ -1,9 +1,7 @@
-import HtmlWebpackPlugin from "html-webpack-plugin";
-import path from "path";
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const path = require("path");
 
-const __dirname = import.meta.dirname;
-
-export default {
+module.exports = {
   entry: "./src/main.js",
   plugins: [
     new HtmlWebpackPlugin({
