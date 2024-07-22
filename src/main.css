@@ -3,6 +3,7 @@ body:not(.dark-theme) {
   --board-content-border-color: #3aa0be;
   --board-header-color: #74a9c0;
   --board-cell-border-color: #74a9c0;
+  --board-cell-target-color: #f00;
   --ship-color: #c1c0bc;
   --ship-border-color: #999;
   --ship-sunk-color: #5b625e;
@@ -15,15 +16,24 @@ body:not(.dark-theme) {
   box-sizing: border-box;
 }
 
+#current-player .board-container {
+  opacity: 0.5;
+}
+
 .board-container {
   display: inline-block;
   padding: 1rem;
 }
 
-.board-content {
+.board {
   position: relative;
   border: 0.3125rem solid var(--board-content-border-color);
   background: var(--board-bg);
+  user-select: none;
+}
+
+.board--targetable {
+  cursor: pointer;
 }
 
 .board-row {
@@ -43,6 +53,10 @@ body:not(.dark-theme) {
 .board-header {
   color: var(--board-header-color);
   font-weight: bold;
+}
+
+.board-cell--target {
+  border: 2px solid var(--board-cell-target-color);
 }
 
 .ship-container {
