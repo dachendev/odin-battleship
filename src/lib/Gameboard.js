@@ -47,22 +47,27 @@ export default class Gameboard {
     }
 
     // add ship to gameboard
-    const shipIndex = this._nextShip++;
-    this.ships[shipIndex] = { ship, x, y, horizontal };
+    const shipId = this._nextShip++;
+    this.ships[shipId] = {
+      id: shipId,
+      instance: ship,
+      origin: [x, y],
+      direction: horizontal ? "horizontal" : "vertical",
+    };
 
     for (let i = 0; i < ship.length; i++) {
       if (horizontal) {
-        this._grid[this._hash(x + i, y)] = shipIndex;
+        this._grid[this._hash(x + i, y)] = shipId;
       } else {
-        this._grid[this._hash(x, y + i)] = shipIndex;
+        this._grid[this._hash(x, y + i)] = shipId;
       }
     }
   }
 
   getShip(x, y) {
-    const shipIndex = this._grid[this._hash(x, y)];
-    if (isDefined(shipIndex)) {
-      return this.ships[shipIndex];
+    const shipId = this._grid[this._hash(x, y)];
+    if (isDefined(shipId)) {
+      return this.ships[shipId];
     }
     return null;
   }
@@ -80,7 +85,7 @@ export default class Gameboard {
     if (!target) {
       this.misses.add([x, y]);
     } else {
-      target.ship.hit();
+      target.instance.hit();
       this.hits.add([x, y]);
     }
   }

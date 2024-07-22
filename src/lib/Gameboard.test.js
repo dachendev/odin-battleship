@@ -21,10 +21,10 @@ describe("Gameboard", () => {
     gameboard.placeShip(ship, 0, 0, true);
     for (let i = 0; i < ship.length; i++) {
       expect(gameboard.getShip(i, 0)).toEqual({
-        ship,
-        x: 0,
-        y: 0,
-        horizontal: true,
+        id: 0,
+        instance: ship,
+        origin: [0, 0],
+        direction: "horizontal",
       });
     }
   });
@@ -34,10 +34,10 @@ describe("Gameboard", () => {
     gameboard.placeShip(ship, 0, 0, false);
     for (let i = 0; i < ship.length; i++) {
       expect(gameboard.getShip(0, i)).toEqual({
-        ship,
-        x: 0,
-        y: 0,
-        horizontal: false,
+        id: 0,
+        instance: ship,
+        origin: [0, 0],
+        direction: "vertical",
       });
     }
   });
