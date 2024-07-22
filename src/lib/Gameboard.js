@@ -1,3 +1,5 @@
+import CoordinateSet from "./CoordinateSet.js";
+
 function isDefined(x) {
   return x !== undefined;
 }
@@ -19,19 +21,19 @@ export default class Gameboard {
 
   reset() {
     this._grid = new Array(this.width * this.height);
-    this._ships = new Array(16);
+    this.ships = new Array(16);
     this._nextShip = 0;
-    this.hits = new Set();
-    this.misses = new Set();
+    this.hits = new CoordinateSet();
+    this.misses = new CoordinateSet();
   }
 
   canPlaceShip(ship, x, y, horizontal) {
     if (
-      this._nextShip >= this._ships.length ||
+      this._nextShip >= this.ships.length ||
       !this._onBoard(x, y) ||
       (horizontal && !this._onBoard(x + ship.length - 1, y)) ||
       (!horizontal && !this._onBoard(x, y + ship.length - 1)) ||
-      !!this.getShip(x, y)
+      this.hasShip(x, y)
     ) {
       return false;
     }
@@ -46,7 +48,7 @@ export default class Gameboard {
 
     // add ship to gameboard
     const shipIndex = this._nextShip++;
-    this._ships[shipIndex] = ship;
+    this.ships[shipIndex] = { ship, x, y, horizontal };
 
     for (let i = 0; i < ship.length; i++) {
       if (horizontal) {
@@ -60,9 +62,13 @@ export default class Gameboard {
   getShip(x, y) {
     const shipIndex = this._grid[this._hash(x, y)];
     if (isDefined(shipIndex)) {
-      return this._ships[shipIndex];
+      return this.ships[shipIndex];
     }
     return null;
+  }
+
+  hasShip(x, y) {
+    return !!this.getShip(x, y);
   }
 
   receiveAttack(x, y) {
@@ -71,15 +77,15 @@ export default class Gameboard {
     }
 
     const target = this.getShip(x, y);
-    if (target && !this.hits.has([x, y])) {
-      target.hit();
-      this.hits.add([x, y]);
-    } else {
+    if (!target) {
       this.misses.add([x, y]);
+    } else {
+      target.ship.hit();
+      this.hits.add([x, y]);
     }
   }
 
   allShipsSunk() {
-    return this._ships.every((ship) => !ship || ship.isSunk());
+    return this.ships.every(({ ship }) => !ship || ship.isSunk());
   }
 }

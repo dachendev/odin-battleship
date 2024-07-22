@@ -16,19 +16,16 @@ describe("Gameboard", () => {
    * integration tests
    */
 
-  test("should place ships", () => {
-    const ship = new Ship(3);
-    gameboard.placeShip(ship, 0, 0);
-    for (let i = 0; i < ship.length; i++) {
-      expect(gameboard.getShip(i, 0)).toEqual(ship);
-    }
-  });
-
   test("should place ships horizontally", () => {
     const ship = new Ship(3);
     gameboard.placeShip(ship, 0, 0, true);
     for (let i = 0; i < ship.length; i++) {
-      expect(gameboard.getShip(i, 0)).toEqual(ship);
+      expect(gameboard.getShip(i, 0)).toEqual({
+        ship,
+        x: 0,
+        y: 0,
+        horizontal: true,
+      });
     }
   });
 
@@ -36,7 +33,12 @@ describe("Gameboard", () => {
     const ship = new Ship(3);
     gameboard.placeShip(ship, 0, 0, false);
     for (let i = 0; i < ship.length; i++) {
-      expect(gameboard.getShip(0, i)).toEqual(ship);
+      expect(gameboard.getShip(0, i)).toEqual({
+        ship,
+        x: 0,
+        y: 0,
+        horizontal: false,
+      });
     }
   });
 
@@ -65,12 +67,12 @@ describe("Gameboard", () => {
     const ship = new Ship(3);
     gameboard.placeShip(ship, 0, 0);
     gameboard.receiveAttack(0, 0);
-    expect(gameboard.hits).toContainEqual([0, 0]);
+    expect(gameboard.hits.has([0, 0])).toBe(true);
   });
 
   test("should keep track of misses", () => {
     gameboard.receiveAttack(0, 0);
-    expect(gameboard.misses).toContainEqual([0, 0]);
+    expect(gameboard.misses.has([0, 0])).toBe(true);
   });
 
   test("should report if all ships are sunk", () => {
