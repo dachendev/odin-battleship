@@ -18,4 +18,10 @@ export default class CoordinateSet {
   clear() {
     this._map = new Map();
   }
+
+  forEach(callback) {
+    this._map.forEach((set, x) => {
+      set.forEach((y) => callback([x, y], this));
+    });
+  }
 }
