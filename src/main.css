@@ -1,26 +1,93 @@
+body:not(.dark-theme) {
+  --board-bg: #317aa5;
+  --board-content-border-color: #3aa0be;
+  --board-header-color: #74a9c0;
+  --board-cell-border-color: #74a9c0;
+  --ship-color: #c1c0bc;
+  --ship-border-color: #999;
+  --ship-sunk-color: #5b625e;
+  --marker-hit-color: radial-gradient(at top left, #fa8987, #f00);
+  --marker-miss-color: radial-gradient(at top left, #fff, #b8cace);
+  --marker-empty-color: #0f0c08;
+}
+
 * {
   box-sizing: border-box;
 }
 
-.gameboard {
+.board-container {
   display: inline-block;
   padding: 1rem;
 }
 
-.gameboard-content {
-  background-color: #235b9a;
+.board-content {
+  position: relative;
+  border: 0.3125rem solid var(--board-content-border-color);
+  background-color: var(--board-bg);
 }
 
-.row {
+.board-row {
   display: flex;
 }
 
-.cell {
-  border: 1px solid #d3d3d3;
-  width: 20px;
-  height: 20px;
+.board-header,
+.board-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid var(--board-cell-border-color);
 }
 
-.cell.has-ship {
-  background-color: gray;
+.board-header {
+  color: var(--board-header-color);
+  font-weight: bold;
+}
+
+.ship-container {
+  position: absolute;
+  z-index: 50;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ship {
+  width: 100%;
+  height: 100%;
+  border: 1px solid var(--ship-border-color);
+  background-color: var(--ship-color);
+}
+
+.ship:not(.ship--size-5) {
+  border-radius: 50%;
+}
+
+.marker-container {
+  position: absolute;
+  z-index: 100;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.marker {
+  width: 35%;
+  height: 35%;
+  border-radius: 50%;
+}
+
+.marker--empty {
+  background: var(--marker-empty-color);
+}
+
+.marker--hit {
+  background: var(--marker-hit-color);
+}
+
+.marker--miss {
+  background: var(--marker-miss-color);
 }

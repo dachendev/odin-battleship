@@ -22,8 +22,22 @@ function setupGame() {
   computer.gameboard.placeShip(new Ship(3), 0, 3);
   computer.gameboard.placeShip(new Ship(2), 0, 4);
 
+  // add some hit markers
+  player.gameboard.receiveAttack(0, 0);
+  player.gameboard.receiveAttack(1, 0);
+  player.gameboard.receiveAttack(2, 0);
+  player.gameboard.receiveAttack(3, 0);
+  player.gameboard.receiveAttack(4, 0);
+
+  // add some miss markers
+  player.gameboard.receiveAttack(0, 5);
+  player.gameboard.receiveAttack(1, 6);
+  player.gameboard.receiveAttack(2, 7);
+  player.gameboard.receiveAttack(3, 8);
+  player.gameboard.receiveAttack(4, 9);
+
   // render player gameboard
-  domUtils.renderGameboard(player.gameboard, true);
+  domUtils.renderGameboard(player.gameboard, { renderShips: true });
   domUtils.renderGameboard(computer.gameboard);
 }
 
