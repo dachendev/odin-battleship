@@ -23,7 +23,7 @@ body:not(.dark-theme) {
 .board-content {
   position: relative;
   border: 0.3125rem solid var(--board-content-border-color);
-  background-color: var(--board-bg);
+  background: var(--board-bg);
 }
 
 .board-row {
@@ -57,7 +57,7 @@ body:not(.dark-theme) {
   width: 100%;
   height: 100%;
   border: 1px solid var(--ship-border-color);
-  background-color: var(--ship-color);
+  background: var(--ship-color);
 }
 
 .ship:not(.ship--size-5) {
