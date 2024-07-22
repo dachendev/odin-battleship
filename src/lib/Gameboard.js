@@ -21,8 +21,8 @@ export default class Gameboard {
 
   reset() {
     this._grid = new Array(this.width * this.height);
-    this.ships = new Array(16);
     this._nextShip = 0;
+    this.ships = new Array(16);
     this.hits = new CoordinateSet();
     this.misses = new CoordinateSet();
   }
@@ -52,7 +52,7 @@ export default class Gameboard {
       id: shipId,
       instance: ship,
       origin: [x, y],
-      direction: horizontal ? "horizontal" : "vertical",
+      horizontal,
     };
 
     for (let i = 0; i < ship.length; i++) {

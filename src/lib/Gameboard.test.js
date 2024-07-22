@@ -24,7 +24,7 @@ describe("Gameboard", () => {
         id: 0,
         instance: ship,
         origin: [0, 0],
-        direction: "horizontal",
+        horizontal: true,
       });
     }
   });
@@ -37,7 +37,7 @@ describe("Gameboard", () => {
         id: 0,
         instance: ship,
         origin: [0, 0],
-        direction: "vertical",
+        horizontal: false,
       });
     }
   });
